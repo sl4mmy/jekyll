@@ -61,6 +61,8 @@ module Jekyll
     'plugins'      => File.join(Dir.pwd, '_plugins'),
     'layouts'      => '_layouts',
 
+    'config_file'  => '_config.yml',
+
     'future'       => true,
     'lsi'          => false,
     'pygments'     => false,
@@ -119,9 +121,10 @@ module Jekyll
     # _config.yml may override default source location, but until
     # then, we need to know where to look for _config.yml
     source = override['source'] || Jekyll::DEFAULTS['source']
+    config_filename = override['config_file'] || Jekyll::DEFAULTS['config_file']
 
-    # Get configuration from <source>/_config.yml
-    config_file = File.join(source, '_config.yml')
+    # Get configuration from <source>/<config_filename>
+    config_file = File.join(source, config_filename)
     begin
       config = YAML.load_file(config_file)
       raise "Invalid configuration - #{config_file}" if !config.is_a?(Hash)
